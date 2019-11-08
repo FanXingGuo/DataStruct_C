@@ -1,0 +1,129 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+//创建一个整型的链表
+typedef struct _NumNode NumNode;
+struct _NumNode{
+    int num;
+    NumNode * next;
+};
+
+//定义一个指针的队列
+
+//数据区域
+typedef struct _Node Node;
+struct _Node{
+    NumNode * numNode;
+    Node * next;
+};
+//控制区域
+typedef struct _Queue Queue;
+struct _Queue{
+    Node * Front;
+    Node * Rear;
+};
+
+//队列实现
+
+//创建一个队列
+Queue * creatQueue(){
+    Node * node=(Node *)malloc(sizeof(Node));
+    node->next=NULL;
+    Queue * queue=(Queue *)malloc(sizeof(Queue));
+    queue->Front=node;
+    queue->Rear=node;
+    return queue;
+}
+//判断是否为空
+bool isEmpty(Queue * queue){
+    return (queue->Front==queue->Rear);
+}
+//入队
+void addQueue(Queue * queue,NumNode * numNode){
+    //创建一个节点
+    Node * node=(Node *)malloc(sizeof(Node));
+    node->numNode=numNode;
+    node->next=NULL;
+    //将节点放入队列
+    queue->Rear->next=node;
+    //将Rear指向心得节点
+    queue->Rear=node;
+}
+//出队
+NumNode * DeleteQ(Queue * queue){
+    if(isEmpty(queue)){
+        return NULL;
+    }
+    else{
+        Node * node=queue->Front->next;
+        NumNode * numNode=node->numNode;
+        queue->Front->next=node->next;
+        free(node);
+        return numNode;
+    }
+}
+
+//整形链表实现
+
+//创建
+NumNode * creatNumNode(){
+    NumNode * numNode=(NumNode *)malloc(sizeof(NumNode));
+    numNode->next=NULL;
+    return numNode;
+}
+//添加元素
+void addNumNode(NumNode * numNode, int num){
+    NumNode * node=numNode;
+    while (node->next!=NULL){node=node->next;}
+    NumNode * newNode=(NumNode *)malloc(sizeof(NumNode));
+    newNode->num=num;
+    newNode->next=NULL;
+    node->next=newNode;
+}
+//显示所有元素
+void showAllNum(NumNode *numNode){
+    NumNode * node=numNode->next;
+    while (node!=NULL){
+        printf("%d\t",node->num);
+        node=node->next;
+    }
+}
+//查询元素
+int findByLastIndex(NumNode * numNode,int lastIndex){
+    int ct=0;
+    int flag=0;
+    NumNode * numNode1=numNode->next;
+    Queue * queue=creatQueue();
+    while (numNode1!=NULL){
+        ct++;
+        if(ct<=lastIndex){
+            addQueue(queue,numNode1);
+        }
+        else{
+            flag=1;
+            addQueue(queue,numNode1);
+            DeleteQ(queue);
+        }
+        numNode1=numNode1->next;
+    }
+    if(flag==0){
+        printf("Not Found\n");
+        return 0;
+    }
+    else{
+        printf("Found it. %d\n",queue->Front->next->numNode->num);
+        return 1;
+    }
+}
+
+int main(){
+
+    NumNode * numNode=creatNumNode();
+    for(int i=0;i<10;i++){
+        addNumNode(numNode,i);
+    }
+    showAllNum(numNode);
+    printf("%d",findByLastIndex(numNode,7));
+
+}

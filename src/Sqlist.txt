@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <mm_malloc.h>
+
+#define MaxSize 20
+
+// 定义线性表
+typedef struct {
+    char data[MaxSize];
+    int last;
+}Sqlist;
+
+//线性表初始化
+
+int main() {
+    printf("Hello, World!\n");
+    return 0;
+}
+
+int InitSqlist(Sqlist * L){
+    L=(Sqlist *)malloc(sizeof(Sqlist));
+    if(L==NULL){
+        return 0;
+    }
+    L->last=-1;
+    return 1;
+}

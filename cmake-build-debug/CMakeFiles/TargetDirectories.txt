@@ -1,0 +1,3 @@
+/Users/FanXingGuo/CLionProjects/dsC/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/FanXingGuo/CLionProjects/dsC/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/FanXingGuo/CLionProjects/dsC/cmake-build-debug/CMakeFiles/dsC.dir

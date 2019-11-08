@@ -1,0 +1,101 @@
+
+//  **********  **********  **********  **********  **********  **********  **********  **********
+
+
+#include <stdio.h>
+
+//分析下面程序段的时间复杂度。
+//sum=0;
+//①        for (k=1; k<=n; k*=2)
+//②          for (j=1; j<=k; j++)
+//③             sum++;
+//解答：
+//对于①有：k=log2n；对于②有：k(k+3)/2；对于③有：k（k+1）/2。则该程序段的时间复杂度为Ｏ（log）。
+
+int main(){
+
+    int sum=0;
+    int n=1024;
+    for(int k=1;k<=n;k*=2){
+//        printf("%d\n",k);
+        for(int j=1;j<=k;j++){
+            sum++;
+        }
+    }
+
+    printf("%d",sum);
+
+
+
+    return 0;
+}
+
+//**********  **********  x,y,z 从小到大 输出  **********  **********  **********  **********
+
+
+#include <stdio.h>
+
+
+
+int main(){
+    int x,y,z,t;
+    scanf("%d %d %d",&x,&y,&z);
+
+    if(x>y){ //先让 x<y
+        t=x;
+        x=y;
+        y=t;
+    }
+    if(y>z){
+        t=z; // t 保存 z
+        z=y; // z 是最大者
+    }
+    if(x<t){
+        y=t;
+    }
+    else{
+        y=x;
+        x=t;
+    }
+
+    printf("%d %d %d\n",x,y,z);
+
+    return 0;
+}
+
+// Fan
+#include <stdio.h>
+
+int mian(){
+
+    // x<y<z
+    int x,y,z,t;
+    scanf("%d %d %d",&x,&y,&z);
+
+    //x<y
+    if(y>x){
+        t=x;
+        x=y;
+        y=t;
+    }
+
+    //沉淀 最大者: z是最大的
+    if(z<y){
+        t=z;
+        z=y;
+    }
+
+    //
+    if(x>t){
+        y=x;
+        x=t;
+    }
+    else{  // x<t
+        y=t;
+    }
+
+    printf("%d %d %d",x,y,z);
+
+
+    return 0;
+}

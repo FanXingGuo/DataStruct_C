@@ -1,0 +1,161 @@
+//栈的 顺序存储实现
+
+#include <stdio.h>
+
+#define SN 20
+
+typedef struct{
+    int data[SN];
+    int top;
+}Stack;
+
+
+void initStack(Stack *ST){
+    ST->top=-1;
+}
+
+void Push(Stack *ST,int x){
+    if(ST->top>=SN-1){
+        printf("OverFlow");
+    }
+    else{
+        ST->data[++ST->top]=x;
+    }
+}
+
+void Pop(Stack *ST,int *x){
+    if(ST->top==-1){
+        printf("UnderFlow");
+    }
+    else{
+        *x=ST->data[ST->top--];
+    }
+}
+int Top(Stack *ST){
+    if(ST->top==-1){
+        printf("UnderFlow");
+        return NULL;
+    }
+    else{
+        return ST->data[ST->top];
+    }
+}
+int Sempty(Stack* St){
+    if(St->top==-1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+int main(){
+
+    Stack st;
+    int x;
+    initStack(&st);
+    Push(&st,1);
+    Push(&st,2);
+    Push(&st,3);
+    Push(&st,4);
+
+    while (Sempty(&st)==0){
+        Pop(&st,&x);
+        printf("%d\n",x);
+    }
+
+    return 0;
+}
+
+
+**********  ********  ************  进制转换 *******
+
+#define M 2
+
+void dec2M(int num){
+    Stack_num stack;
+    initStack_num(&stack);
+    int item;
+    while (num!=0){
+        Push_num(&stack,num%M);
+        num=(int)num/2;
+    }
+    while (Sempty_num(&stack)!=1){
+        Pop_num(&stack,&item);
+        printf("%d",item);
+    }
+}
+
+int main(){
+
+    int num=43;
+    dec2M(num);
+
+
+}
+
+**********  *************  ***********  表达式求值(课本 错误的示范)  ************  *************
+
+//栈的 顺序存储实现
+
+#include <stdio.h>
+#include <ctype.h>
+#include "stack_num.h"
+#include "stack_char.h"
+#include "expression_calculation.h"
+
+
+
+
+
+
+int main(){
+
+
+    char c,theta,x;
+    float a,b,ans;
+
+    Stack_char OPTR;
+    initStack_char(&OPTR);
+    Stack_float OPND;
+    initStack_float(&OPND);
+
+    Push_char(&OPTR,'#');
+
+    c=getchar();
+    while (c!='#'||Top_char(&OPTR)!='#'){
+        if(In(c)==-1){  //如果不是运算符合
+            Push_char(&OPTR,c);
+            c=getchar();
+        }
+        else{
+            switch (Precede(Top_char(&OPTR),c)){
+                case '<':
+                    Push_char(&OPTR,c);
+                    c=getchar();
+                    break;
+                case '=':
+                    Pop_char(&OPTR,&x);
+                    c=getchar();
+                    break;
+                case '>':
+                    Pop_char(&OPTR,&theta);
+                    Pop_num(&OPND,&b);
+                    Pop_num(&OPND,&a);
+                    Push_float(&OPND,Operate(a,b,theta));
+
+                    break;1
+            }
+        }
+    }
+    ans=Top_float(&OPND);
+    printf("%f",ans);
+
+
+
+    return 0;
+}
+
+
+
+**********  *************  ***********  ************  *************
